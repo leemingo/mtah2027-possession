@@ -1,3 +1,35 @@
+# Team Saargart — how to reproduce our submission
+
+This fork contains our Phase 1 submission. The method, the assets we used and the validation are in
+[TECHNICAL_REPORT.md](TECHNICAL_REPORT.md); the pipeline is in [possession/](possession/).
+The organisers' original README follows below.
+
+**1. Data.** Unpack the official bundle into `data/` as described in [DATA.md](DATA.md) (or set
+`MTAH_DATA_DIR`). Needed: `data/tactical/BAR-ATH_tactical.mp4`, `_atd.txt`, `_atd.xml`,
+`_homography.csv`, `_smart_tagging.xml`. Nothing in `data/` is committed.
+
+**2. Three environments.**
+
+| env | Python | install | used for |
+|---|---|---|---|
+| `PY_POSS` | 3.10 | `pip install -r requirements-possession.txt` | possession pipeline + learned model |
+| `PY_PCRF` | 3.11 | `pip install torch==2.15.0+cpu --index-url https://download.pytorch.org/whl/cpu && pip install -r requirements-pathcrf.txt` | PathCRF prior (CPU) |
+| `PY_BALL` | 3.12 | `pip install -r ball_detection/requirements.txt` (+ CUDA torch) | WASB zero-shot ball detection on the tactical video (GPU) |
+
+**3. Regenerate the submission.**
+
+```bash
+PY_POSS=envs/poss/bin/python PY_PCRF=envs/pcrf/bin/python PY_BALL=envs/ball/bin/python \
+  bash make_submission.sh LP0B05 Saargart.csv
+```
+
+Expected md5: `1bfb5697256e03e6c77ede2072d4c8be`. Runtime: PathCRF ~7 min (CPU), WASB ~1.5 h per
+half on one GPU plus ~10 min linking, possession step ~10 s. The learned model
+(`possession/models/learned_dfl.pkl`) is trained on Sportec Open DFL only and can be retrained with
+`possession/training/train_dfl.sh`.
+
+---
+
 # More than a Hack 2027 — Phase 1: Ball Possession
 
 **Organised by [Metrica Sports](https://metrica-sports.com), [FC Barcelona](https://www.fcbarcelona.com)

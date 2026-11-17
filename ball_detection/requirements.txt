@@ -1,0 +1,10 @@
+# Ball detection pipeline (src/). For a GPU install torch from https://pytorch.org matching your CUDA version.
+numpy==2.5.4
+pandas==3.1.1
+opencv-python==5.0.0.93
+torch==2.11.0
+pyyaml==6.0.3
+gdown  # weights/download_wasb.sh
+# dashboard.py (data viewer; also builds the tracking / homography caches used by src/common.py)
+streamlit==1.67.0
+plotly==7.1.0

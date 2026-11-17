@@ -62,3 +62,13 @@ __pycache__/
 venv/
 env/
 .DS_Store
+
+# -- team additions ------------------------------------------------------------------------------
+# Frame-level derived data (ball tracks, caches, masks, local outputs) must never be published.
+*.npz
+*.npy
+*_mask.csv
+evaluation/results_local/
+
+# third-party code fetched by possession/setup_pathcrf.sh
+/external/

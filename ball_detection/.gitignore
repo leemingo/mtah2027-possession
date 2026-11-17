@@ -1,0 +1,7 @@
+# Frame-level outputs are derived from the licensed match data: never commit them
+ball_results.npz
+*.npz
+weights/wasb_soccer_best.pth.tar
+__pycache__/
+*:Zone.Identifier
+weights/wasb_ft.pth.tar
